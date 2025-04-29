@@ -11,20 +11,34 @@ const TaskBoard = ({ tasks, setTasks }) => {
 
   const onDragEnd = (result) => {
     const { source, destination } = result;
-    if (!destination) return;
-    if (source.droppableId === destination.droppableId && source.index === destination.index) return;
+    if (!destination) return; // Dropped outside
 
-    const sourceTasks = Array.from(tasks[source.droppableId]);
-    const [movedTask] = sourceTasks.splice(source.index, 1);
-    const destinationTasks = Array.from(tasks[destination.droppableId]);
-    movedTask.status = destination.droppableId;
-    destinationTasks.splice(destination.index, 0, movedTask);
+    const sourceColumn = source.droppableId;
+    const destinationColumn = destination.droppableId;
 
-    setTasks({
-      ...tasks,
-      [source.droppableId]: sourceTasks,
-      [destination.droppableId]: destinationTasks,
-    });
+    // If the task is moved within the same column and index, don't update
+    if (
+      sourceColumn === destinationColumn &&
+      source.index === destination.index
+    ) {
+      return;
+    }
+
+    // Clone the tasks to avoid mutation
+    const newTasks = { ...tasks };
+
+    // Find the task that was dragged
+    const task = newTasks[sourceColumn][source.index];
+
+    // Remove the task from the source column
+    newTasks[sourceColumn].splice(source.index, 1);
+
+    // Add the task to the destination column
+    task.status = destinationColumn;
+    newTasks[destinationColumn].splice(destination.index, 0, task);
+
+    // Update the state with the new task order
+    setTasks(newTasks);
   };
 
   const handleDelete = (column, id) => {
@@ -33,10 +47,10 @@ const TaskBoard = ({ tasks, setTasks }) => {
     setTasks(updated);
   };
 
-  const handleEdit = (column, id, newText) => {
+  const handleEdit = (column, id, newTitle, newTags) => {
     const updated = { ...tasks };
     updated[column] = updated[column].map((task) =>
-      task.id === id ? { ...task, text: newText } : task
+      task.id === id ? { ...task, title: newTitle, tags: newTags } : task
     );
     setTasks(updated);
   };

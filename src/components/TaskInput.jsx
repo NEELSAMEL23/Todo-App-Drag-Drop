@@ -11,7 +11,7 @@ const TaskInput = ({ addTask }) => {
     e.preventDefault();
     if (!title.trim()) return;
     const newTask = {
-      id: Date.now().toString(),
+      id: Date.now().toString(), // Unique ID based on timestamp
       title,
       tags,
       status,

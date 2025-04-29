@@ -15,7 +15,7 @@ const TaskColumn = ({ title, tasks, columnKey, onDelete, onEdit }) => {
           >
             {tasks.map((task, index) => (
               <TaskCard
-                key={task.id}
+                key={task.id} // Ensure unique key is assigned
                 task={task}
                 index={index}
                 columnKey={columnKey}
