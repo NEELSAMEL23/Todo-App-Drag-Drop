@@ -2,6 +2,15 @@
 
 A **Task Management App** built with **React**, **Tailwind CSS**, and **@hello-pangea/dnd** for drag-and-drop functionality. This app helps users organize and track tasks by allowing them to move tasks between columns, edit them inline, and delete them as needed.
 
+## 🌐 Live Demo
+
+Check out the live app here: [Todo Tracker App](https://todotraker.netlify.app/)
+
+## 📸 Screenshot
+
+![Todo Tracker Screenshot](./public/todotraker.png)
+
+
 ## 🛠️ Technologies Used
 
 - **React (v19)**: The frontend library used to build the user interface.
